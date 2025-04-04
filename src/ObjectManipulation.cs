@@ -95,6 +95,21 @@ namespace BooksAndFractals
             }
             return null;
         }
+        public static List<T> FindAllObjectsWithClass<T>() where T : MonoBehaviour
+        {
+            GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+            List<T> objects = new List<T>();
+
+            foreach (GameObject obj in allObjects)
+            {
+                T component = obj.GetComponent<T>();
+                if (component != null)
+                {
+                    objects.AddRange(obj.GetComponentsInChildren<T>(true));
+                }
+            }
+            return objects;
+        }
         public static void DeleteAllChildren(this GameObject obj)
         {
             foreach (GameObject child in GetChildrenOfObject(obj))
@@ -139,6 +154,43 @@ namespace BooksAndFractals
             {
                 return obj.GetComponentsInChildren<T>();
             }
+        }
+        public static GameObject FindGameObjectByName(string objectName)
+        {
+            GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+            foreach (GameObject obj in allObjects)
+            {
+                if (obj.name == objectName)
+                {
+                    return obj; // Return the first matching object
+                }
+            }
+
+            return null; // Return null if no object is found
+        }
+        public static Transform FindInactiveChild(Transform parent, string childName)
+        {
+            foreach (Transform child in parent.GetComponentsInChildren<Transform>(true)) // true includes inactive objects
+            {
+                if (child.name == childName)
+                {
+                    return child; // Return the first matching child
+                }
+            }
+
+            return null; // Return null if not found
+        }
+        public static List<Light> FindAllLightsInScene()
+        {
+            List<Light> lights = new List<Light>();
+
+            foreach (GameObject obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                lights.AddRange(obj.GetComponentsInChildren<Light>(true)); // Include inactive lights
+            }
+
+            return lights;
         }
     }
 }
