@@ -37,4 +37,8 @@
     </Reference>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /b/v/y &quot;E:\Codes\c#\BooksAndFractals\bin\Release\net6.0\BooksAndFractals.dll&quot; &quot;E:\Steam Games\Fractal Space\UserLibs&quot;" />
+  </Target>
+
 </Project>
