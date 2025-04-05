@@ -93,7 +93,8 @@ namespace BooksAndFractals
             stream.Read(bytes);
             Il2CppAssetBundle bundle = Il2CppAssetBundleManager.LoadFromMemory(bytes);
 
-            loadedBundles.Add(bundlePath, bundle);
+            string bundleName = Path.GetFileNameWithoutExtension(bundlePath);
+            loadedBundles.Add(bundleName, bundle);
         }
 
         /// <summary>
