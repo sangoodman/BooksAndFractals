@@ -69,6 +69,32 @@ namespace BooksAndFractals
             string bundlePath = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Mods", folder, fileName);
             PreloadBundle(bundlePath);
         }
+        /// <summary>
+        /// Preloads a bundle embedded in the DLL in memory so you can load assets from it later.
+        /// </summary>
+        /// <param name="bundlePath">
+        /// The name of the Asset Bundle to load (Or path in case the asset is inside of a subfolder).
+        /// <para>For example, if your asset is inside of a folder called "Resources" then put "Resources/AssetName".</para>
+        /// <para>The method automatically gets the <c>name</c> of the assembly. <c>DON'T</c> include it in the path.</para>
+        /// </param>
+        public static void PreloadEmbeddedBundle(string bundlePath)
+        {
+            string[] embeddedFilesInAssembly = Assembly.GetCallingAssembly().GetManifestResourceNames();
+            string assetFullName = Assembly.GetCallingAssembly().GetName().Name + "." + bundlePath.Replace('/', '.');
+
+            if (!embeddedFilesInAssembly.Contains(assetFullName))
+            {
+                Debug.LogError("Couldn't find any embedded file in the DLL with name: " + bundlePath);
+                return;
+            }
+
+            Stream stream = Assembly.GetCallingAssembly().GetManifestResourceStream(assetFullName);
+            byte[] bytes = new byte[stream.Length];
+            stream.Read(bytes);
+            Il2CppAssetBundle bundle = Il2CppAssetBundleManager.LoadFromMemory(bytes);
+
+            loadedBundles.Add(bundlePath, bundle);
+        }
 
         /// <summary>
         /// Loads an object from one of the currently loaded asset bundles with the specified name.
