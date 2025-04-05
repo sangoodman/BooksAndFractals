@@ -75,6 +75,7 @@ namespace BooksAndFractals
         /// <param name="bundlePath">
         /// The name of the Asset Bundle to load (Or path in case the asset is inside of a subfolder).
         /// <para>For example, if your asset is inside of a folder called "Resources" then put "Resources/AssetName".</para>
+        /// <para>The method automatically gets the <c>name</c> of the assembly. <c>DON'T</c> include it in the path.</para>
         /// </param>
         public static void PreloadEmbeddedBundle(string bundlePath)
         {
