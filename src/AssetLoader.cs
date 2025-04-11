@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Reflection;
+using MelonLoader;
 
 namespace BooksAndFractals
 {
@@ -84,7 +85,7 @@ namespace BooksAndFractals
 
             if (!embeddedFilesInAssembly.Contains(assetFullName))
             {
-                Debug.LogError("Couldn't find any embedded file in the DLL with name: " + bundlePath);
+                Debug.LogError("Couldn't find any embedded file in the DLL with name: " + bundlePath + " in: " + assetFullName);
                 return;
             }
 
