@@ -153,5 +153,31 @@ namespace BooksAndFractals
             }
             return newColor;
         }
+
+        /// <summary>
+        /// Turns an array to list, adds some values, and returns an array.
+        /// </summary>
+        /// <typeparam name="T">The type of given array</typeparam>
+        /// <param name="array">The name of array</param>
+        /// <param name="additionalValues">Values to add into the new array</param>
+        /// <returns>The new array with added values.</returns>
+        public static T[] AddToArray<T>(T[] array, params T[] additionalValues)
+        {
+            // Convert array to list
+            List<T> list = new List<T>(array);
+
+            // Add additional values
+            list.AddRange(additionalValues);
+
+            // Convert list back to array and return
+            return list.ToArray();
+        }
+        /// <summary>
+        /// If your mod does something illegal that could resolve in leaderboard cheating, or will be used for future FSPC speedrun.com Category Extensions, use this function to turn off Steamworks.
+        /// </summary>
+        public static void DisableSteamworks()
+        {
+            GameObject.Destroy(SteamManager.Instance.gameObject);
+        }
     }
 }
